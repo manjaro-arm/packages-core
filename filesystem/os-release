@@ -1,0 +1,7 @@
+NAME="Manjaro-Arm"
+ID=manjaro-arm
+PRETTY_NAME="Manjaro-Arm"
+ANSI_COLOR="1;32"
+HOME_URL="http://www.manjaro-arm.org/"
+SUPPORT_URL="http://www.manjaro-arm.org/"
+

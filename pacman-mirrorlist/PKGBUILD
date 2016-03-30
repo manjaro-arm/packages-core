@@ -1,0 +1,24 @@
+# Maintainer: Guillaume <guillaume@manjaro.org>
+# Maintainer: Roland <roland@manjaro.org>
+# Maintainer: Philip Müller <philm@manjaro.org>
+
+pkgname=pacman-mirrorlist
+pkgver=20$(date +%y%m%d)
+pkgrel=1
+pkgdesc="Manjaro Linux mirror list for use by pacman"
+arch=('any')
+depends=('python')
+makedepends=('git' 'python-babel' 'python-setuptools')
+optdepends=('gtk3: for interactive mode (GUI)' 
+            'python-gobject: for interactive mode (GUI)')
+url="https://github.com/manjaro/pacman-mirrors.git"
+license=('GPL')
+install=pacman-mirrorlist.install
+backup=(etc/pacman-mirrors.conf)
+source=(git+https://github.com/manjaro/pacman-mirrors.git)
+sha256sums=('SKIP')
+
+package() {
+  cd "${srcdir}"/pacman-mirrors
+  make DESTDIR="${pkgdir}" install
+}
