@@ -16,7 +16,7 @@ url="https://github.com/manjaro-arm/pacman-mirrors.git"
 license=('GPL')
 install=pacman-mirrorlist.install
 backup=(etc/pacman-mirrors.conf)
-source=(git+https://github.com/manjaro/pacman-mirrors.git)
+source=(git+https://github.com/manjaro-arm/pacman-mirrors.git)
 sha256sums=('SKIP')
 
 package() {

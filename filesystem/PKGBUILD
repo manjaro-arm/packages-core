@@ -6,7 +6,7 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=filesystem
-pkgver=2015.09
+pkgver=2016.04
 pkgrel=1
 pkgdesc='Base filesystem'
 arch=('armv6h' 'armv7h' 'aarch64' 'i686' 'x86_64')
@@ -28,7 +28,7 @@ sha256sums=('4e298e0ec247c3bb09157f5598127f6ecb779f5ec018ab69ba4678f361bdaae3'
             '82f6ae854935c1cb082908ae026e156000bdd32b39b1e2d5d576592d8d952291'
             '62c197a97f7f3951ac86d34629184e3ebe030969a69925874f8db13365f85011'
             'f21f35e7d3083aeee19beb48478130d119b2572922a4889df98326d551540eda'
-            '2a6171c2a6c837c8571a6cb333cfb33cdcb774dc7b21a641258b25a7c7a32085'
+            'b5784dc4e2101475f2b9e1b6f977ad46dc63f064aac4c4a59cf3521b40426b21'
             '13d1f59c1d0860bf43da996e2b9a6ab2744791614241ed9a1376b7e7e30de3a8'
             '796ac62b808ebc8da2611835105a35ea866e9b5d054b669ad06acbb741f1e29a'
             '00d5d103837480d26cd350753382c3211df6bc304ee59ffaab130fad108f6a86'

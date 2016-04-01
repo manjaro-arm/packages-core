@@ -10,7 +10,7 @@ pkgname=pacman
 pkgver=5.0.1
 pkgrel=2
 pkgdesc="A library-based package manager with dependency support"
-arch=('i686' 'x86_64' 'armv6h' 'aarch64' 'arrmv7h')
+arch=('i686' 'x86_64' 'armv6h' 'aarch64' 'armv7h')
 url="http://www.archlinux.org/pacman/"
 license=('GPL')
 groups=('base' 'base-devel')
@@ -26,19 +26,19 @@ backup=(etc/pacman.conf etc/makepkg.conf)
 install=pacman.install
 options=('strip' 'debug')
 source=(https://sources.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz
-        pacman.conf.i686
-        pacman.conf.x86_64
+        pacman.conf.armv7h
+        pacman.conf.armv6h
+        pacman.conf.arm
+        pacman.conf.aarch64
         makepkg.conf
         pacman-sync-first-option.patch
         etc-pacman.d-gnupg.mount
         pacman-init.service
-	pacman.conf.aarch64
-        0001-libmakepkg-fix-is_array-function.patch)
+	pacman.conf.aarch64)
 
 prepare() {
   cd $srcdir/$pkgname-$pkgver
 
-  patch -p1 -i $srcdir/0001-libmakepkg-fix-is_array-function.patch
 
   # Manjaro patches
   patch -p1 -i $srcdir/pacman-sync-first-option.patch
@@ -123,11 +123,12 @@ package() {
 }
 
 sha256sums=('8bd5f407ce8e05c4be8f1c4be4d8dcc8550ea5e494937da5220ea2c23cbb8e04'
-            '811307fac47ab1b8405da798feb122dfdd61be099dad236199503e8e6969bf5f'
-            '92e68dabb8724ebaa5fd0fd50e2c8a5f2bba65797295c74571f720ee7e2c513d'
+            'b03fe481349a122f5cfc5cb56c4a7674384311fa9b1cd574e1c34b67d183ca43'
+            'b03fe481349a122f5cfc5cb56c4a7674384311fa9b1cd574e1c34b67d183ca43'
+            'b03fe481349a122f5cfc5cb56c4a7674384311fa9b1cd574e1c34b67d183ca43'
+            'b03fe481349a122f5cfc5cb56c4a7674384311fa9b1cd574e1c34b67d183ca43'
             'bdd06f1e52ff4bb8e8d5d6be785e172b74809b1266cbcd33e2c42c9927493eee'
             'feb18bf548343ce6bd60b1e9252ad4b0643c21ac1a53149d93afbd6028a7a37d'
             'b6d14727ec465bb66d0a0358163b1bbfafcb4eaed55a0f57c30aabafae7eed68'
             'ca4aa967ccfb9affab23fd61ad6d16f330b2810e5f9de93deec49ea7872369ae'
-	    'e10c4ce87b0694b81a4ea6c6e7d2134bd717cf256295538b9a85ff7a5a546a3e'
-            '79b196f8ddefe66bb0825ef356368b1592a67ac2f6290ba93dea12b244658963')
+            'b03fe481349a122f5cfc5cb56c4a7674384311fa9b1cd574e1c34b67d183ca43')
