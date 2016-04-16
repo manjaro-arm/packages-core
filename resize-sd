@@ -1,0 +1,59 @@
+#!/bin/sh
+# This script will attempt to resize the partition and filesystem in order to fill the sdcard
+ # Credits to rpi-distro https://github.com/RPi-Distro/raspi-config/
+
+# Get device and partition numbers/names
+ # Root Partition
+  PART_DEV=`grep -Eo 'root=[[:graph:]]+' /proc/cmdline | cut -d "=" -f 2-`
+ 
+ # Remove '/dev/' from the name 
+  PART_NAME=`echo $PART_DEV | cut -d "/" -f 3`
+ 
+ # Set just the name of the device, usually mmcblk0
+  DEV_NAME=`echo /sys/block/*/${PART_NAME} | cut -d "/" -f 4`
+
+ # Add /dev/ to device name
+  DEV="/dev/${DEV_NAME}"
+
+ # Get Number of device as single digit integer
+  PART_NUM=`cat /sys/block/${DEV_NAME}/${PART_NAME}/partition`
+
+ # Get size of SDCard (final sector)
+  SECTOR_SIZE=`cat /sys/block/${DEV_NAME}/size`
+
+ # Set the ending sector that the partition should be resized too
+  END_SECTOR=`expr $SECTOR_SIZE - 1`
+
+
+# start working
+clear
+echo "This will attempt to grow the 'Root (/)' partition to the maximum space on the SDcard"
+echo "after it is finished, it will grow the filesystem to fill the partition and reboot the device"
+echo " "
+echo "There is a chance of corruption, loss of data, or even worse so proceed with caution"
+echo " "
+read -s -n 1 -p "Press any key to continue ......" 
+echo " "
+
+# resize the partition
+parted -m $DEV u s resizepart $PART_NUM $END_SECTOR
+
+# reload the partitions in the kernel
+partprobe
+echo "Resize parition successful. Growing filesystem to fit partition ......"
+
+echo " "
+echo " "
+echo " "
+echo " "
+# resize
+resize2fs $PART_DEV
+# show that the partition and fs are reading the proper size
+df -h | head -2
+
+echo " "
+echo "Resize Filesystem successful"
+read -s -n 1 -p "Press any key to reboot device .... "
+
+reboot
+
