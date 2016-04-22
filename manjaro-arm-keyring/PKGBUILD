@@ -5,12 +5,12 @@
 # Maintainer : Guillaume Benoit <guillaume@manjaro.org>
 # Contributor: Rob McCathie <rob@manjaro.org>
 
-pkgname=manjaro-keyring
-pkgver=20160302
-pkgrel=2
-pkgdesc='Manjaro PGP keyring'
+pkgname=manjaro-arm-keyring
+pkgver=20160422
+pkgrel=1
+pkgdesc='Manjaro-Arm PGP keyring'
 arch=('any')
-url='http:/manjarolinux.org'
+url='http://manjaro-arm.org'
 license=('GPL')
 install="${pkgname}.install"
 source=('Makefile'
@@ -18,9 +18,9 @@ source=('Makefile'
         'manjaro-revoked'
         'manjaro-trusted')
 sha256sums=('ac8fed4c8dbb910bb4fb3c01cb63de00d6b25ac79734ea5c933706aff6f9c950'
-            '864952aad622521375cfdc25d539b7e25a0a45f4e2c3c76175842eda3b0872e6'
-            'ce3dce1721eb380d2ba6c5c668c7e466d391eff7ee1285f88b90e01023324b72'
-            '7c0cd319ff99f67565a44f6ce8c09ce97fd0252be020f794ea313fa0d7221119')
+            '755ad9977c39af4e83814a202f75177099e6b96186e75d3c77cc4bd4e16cc016'
+            'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+            '90be65de4249b6b8dae1a164bc56e12bee751fee63e4e9e03f379afe6eba3a65')
 
 package() {
 	cd "${srcdir}"
