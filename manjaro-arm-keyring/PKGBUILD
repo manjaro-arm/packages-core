@@ -14,9 +14,9 @@ url='http://manjaro-arm.org'
 license=('GPL')
 install="${pkgname}.install"
 source=('Makefile'
-        'manjaro.gpg'
-        'manjaro-revoked'
-        'manjaro-trusted')
+        'manjaro-arm.gpg'
+        'manjaro-arm-revoked'
+        'manjaro-arm-trusted')
 sha256sums=('376cd072fea02a830c0b782237d6cd349ca95fe04acde6c7aafe1d5ad9f7861b'
             '755ad9977c39af4e83814a202f75177099e6b96186e75d3c77cc4bd4e16cc016'
             'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
