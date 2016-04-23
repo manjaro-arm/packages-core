@@ -1,9 +1,9 @@
 post_upgrade() {
 	if usr/bin/pacman-key -l >/dev/null 2>&1; then
-		usr/bin/pacman-key --populate manjaro
+		usr/bin/pacman-key --populate manjaro-arm
 	else
 		echo " >>> Run \`pacman-key --init\` to set up your pacman keyring."
-		echo " >>> Then run \`pacman-key --populate manjaro\` to install the Manjaro keyring."
+		echo " >>> Then run \`pacman-key --populate manjaro-arm\` to install the Manjaro keyring."
 	fi
 }
 
