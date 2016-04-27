@@ -1,16 +1,19 @@
+# Maintainer: Dave Higham <pepedog@archlinuxarm.org>
+# Maintainer: Kevin Mihelich <kevin@archlinuxarm.org>
+# Maintainer: Oleg Rakhmanov <oleg@archlinuxarm.org>
 
-# --Forked from ArchlinuxArm  
+# NOTE: Packages replace linux-raspberrypi-latest, remove if that package comes back
 
 buildarch=20
 
 pkgbase=linux-raspberrypi
-_commit=16c5341cefdc2db21838dc198dbe11cac4e19b62
+_commit=fe7ad6aa5c6940817fe971d80a7b2a1d6052190a
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="Raspberry Pi"
-pkgver=4.1.20
-pkgrel=2
-bfqver=v7r8
+pkgver=4.4.8
+pkgrel=1
+bfqver=v7r11
 arch=('armv6h' 'armv7h')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -18,22 +21,25 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git')
 options=('!strip')
 source=("https://github.com/raspberrypi/linux/archive/${_commit}.tar.gz"
         "git+https://github.com/sfjro/aufs4-standalone.git#branch=aufs${pkgver%.*}"
-        "ftp://teambelgium.net/bfq/patches/${pkgver%.*}.0-${bfqver}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${bfqver}-${pkgver%.*}.patch"
-        "ftp://teambelgium.net/bfq/patches/${pkgver%.*}.0-${bfqver}/0002-block-introduce-the-BFQ-${bfqver}-I-O-sched-for-${pkgver%.*}.patch"
-        "ftp://teambelgium.net/bfq/patches/${pkgver%.*}.0-${bfqver}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${bfqver}-for-${pkgver%.*}.0.patch"
+        "bfq1.patch::ftp://teambelgium.net/bfq/patches/${pkgver%.*}.0-${bfqver}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${bfqver}-${pkgver%.*}.0.patch"
+        "bfq2.patch::ftp://teambelgium.net/bfq/patches/${pkgver%.*}.0-${bfqver}/0002-block-introduce-the-BFQ-${bfqver}-I-O-sched-for-${pkgver%.*}.0.patch"
+        "bfq3.patch::ftp://teambelgium.net/bfq/patches/${pkgver%.*}.0-${bfqver}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${bfqver}-for.patch"
+        'https://archlinuxarm.org/builder/src/brcmfmac43430-sdio.bin' 'https://archlinuxarm.org/builder/src/brcmfmac43430-sdio.txt'
         'config.txt'
         'cmdline.txt'
         'config.v6'
         'config.v7')
-md5sums=('c702ce395901e26806a1cd4ffe78403f'
+md5sums=('f15ca87b4971a8b2793d657a9e0e48f2'
          'SKIP'
-         '74bf103542cbdee0363819309adb97a2'
-         'f09baae3c7add4ed9bedde22ae3efe19'
-         'bd8cc19a31d1cf8aeeaf9245057c4f9b'
-         '9a3c82da627b317ec79c37fd6afba569'
+         'c1d7fcfe88edb658375089c0a9cc1811'
+         '953133d5e387de2ad79ac0ae5c27cb6b'
+         'f0387e673975e9f2a5e05136948edece'
+         '4a410ab9a1eefe82e158d36df02b3589'
+         '8c3cb6d8f0609b43f09d083b4006ec5a'
+         'b8d4baa1ca99ce1c7a125564c583227d'
          '60bc3624123c183305677097bcd56212'
-         '034b429081ac54ae4fb40142f043b140'
-         'dbfac5321a69b9925adae9601d2e907e')
+         '1ab76677109d79aeeb1e3d4f13b81f99'
+         'ed69f37494c503ef8a73f1d19d44f662')
 
 prepare() {
   cd "${srcdir}/${_srcname}"
@@ -50,9 +56,9 @@ prepare() {
   patch -Np1 -i ../aufs4-standalone/aufs4-standalone.patch
 
   msg2 "Add BFQ patches"
-  patch -Np1 -i "${srcdir}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${bfqver}-${pkgver%.*}.patch"
-  patch -Np1 -i "${srcdir}/0002-block-introduce-the-BFQ-${bfqver}-I-O-sched-for-${pkgver%.*}.patch"
-  patch -Np1 -i "${srcdir}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${bfqver}-for-${pkgver%.*}.0.patch"
+  patch -Np1 -i "${srcdir}/bfq1.patch"
+  patch -Np1 -i "${srcdir}/bfq2.patch"
+  patch -Np1 -i "${srcdir}/bfq3.patch"
 
   msg "Prepare to build"
   [[ $CARCH == "armv6h" ]] && cat "${srcdir}/config.v6" > ./.config
@@ -63,6 +69,9 @@ prepare() {
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
+
+  mkdir firmware/brcm
+  cp ../brcmfmac43430-sdio.{bin,txt} firmware/brcm
 }
 
 build() {
