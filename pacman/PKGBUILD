@@ -8,7 +8,7 @@
 
 pkgname=pacman
 pkgver=5.0.1
-pkgrel=4
+pkgrel=5
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64' 'armv6h' 'aarch64' 'armv7h')
 url="http://www.archlinux.org/pacman/"
@@ -28,7 +28,6 @@ options=('strip' 'debug')
 source=(https://sources.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz
         pacman.conf.armv7h
         pacman.conf.armv6h
-        pacman.conf.arm
         pacman.conf.aarch64
         makepkg.conf
         pacman-sync-first-option.patch
@@ -82,11 +81,6 @@ package() {
   install -m644 $srcdir/pacman.conf.$CARCH $pkgdir/etc/pacman.conf
   
   case $CARCH in
-    arm)
-      mycarch="arm"
-      mychost="armv5tel-unknown-linux-gnueabi"
-      myflags="-march=armv5te "
-      ;;
     armv6h)
       mycarch="armv6h"
       mychost="armv6l-unknown-linux-gnueabihf"
@@ -134,12 +128,11 @@ package() {
 }
 
 sha256sums=('8bd5f407ce8e05c4be8f1c4be4d8dcc8550ea5e494937da5220ea2c23cbb8e04'
-            'f8694555197170745ea5d7b973ad985e1cb430fee7d5314f9341f454ffbb6e57'
-            '855019ef93b97892b3d67ccb7b405df2e3f6d3c51f7a6e117b553adda4d82525'
-            '02ca81fed94cd72ab052873e41eaac662fba20991e4ca6be65162db9290d50a4'
-            '40cb4d55146e22205aa240bc3efb53ceda355e900147be4b947ce823f9dd8ac6'
+            '11d4d8aa2eb9f8d15f5f61835573a8140c052b8e17655f666cd81205841fd010'
+            '64d0200bc16e182ca45b74fb2d633c395e5ecfb8c662c557f056326fabf4836b'
+            '0447073204ff2ee92cf9d99cd12f80735dc79abbf7d2eeec43413f91da917a72'
             'bdd06f1e52ff4bb8e8d5d6be785e172b74809b1266cbcd33e2c42c9927493eee'
             'feb18bf548343ce6bd60b1e9252ad4b0643c21ac1a53149d93afbd6028a7a37d'
             'b6d14727ec465bb66d0a0358163b1bbfafcb4eaed55a0f57c30aabafae7eed68'
             'ca4aa967ccfb9affab23fd61ad6d16f330b2810e5f9de93deec49ea7872369ae'
-            '40cb4d55146e22205aa240bc3efb53ceda355e900147be4b947ce823f9dd8ac6')
+            '0447073204ff2ee92cf9d99cd12f80735dc79abbf7d2eeec43413f91da917a72')
