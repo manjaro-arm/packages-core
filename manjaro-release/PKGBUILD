@@ -1,8 +1,8 @@
 # Maintainer: Guinux <nuxgui@gmail.com>
 
 pkgname=manjaro-release
-pkgver=16.04
-pkgrel=2
+pkgver=16.05
+pkgrel=1
 pkgdesc="Manjaro's release definition"
 arch=("any")
 url="http://manjarolinux.org/"

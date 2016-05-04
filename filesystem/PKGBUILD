@@ -6,8 +6,8 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=filesystem
-pkgver=2016.04
-pkgrel=2
+pkgver=2016.05
+pkgrel=1
 pkgdesc='Base filesystem'
 arch=('armv6h' 'armv7h' 'aarch64' 'i686' 'x86_64')
 license=('GPL')

@@ -7,7 +7,7 @@
 
 pkgname=lsb-release
 pkgver=1.4
-pkgrel=13
+pkgrel=14
 pkgdesc="LSB version query program"
 arch=('any')
 url="http://www.linuxbase.org/"
