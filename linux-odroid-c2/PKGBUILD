@@ -9,7 +9,7 @@ _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ODROID-C2"
 pkgver=3.14.29
-pkgrel=1
+pkgrel=2
 arch=('aarch64')
 url="https://github.com/hardkernel/linux/tree/odroidc2-3.14.y"
 license=('GPL2')
@@ -23,7 +23,7 @@ source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
 md5sums=('6651c5f790f50cb095e7dc51a02d889a'
          '1b8e6672f31b17d4f2f18b5991edae5e'
          '790ea64513d1b6e7497f8cecdb10780b'
-         'a51045b70ab352093848d755d46132bf'
+         '3a08cd5c4474c4fcbd070a3b35966cd4'
          '85fd3026c435ffa6d7c2d7f9767b4251')
 
 prepare() {
