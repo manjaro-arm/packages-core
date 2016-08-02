@@ -4,33 +4,32 @@
 buildarch=8
 
 pkgbase=linux-odroid-c2
-_commit=8189c8168f16de80899fbb690f160d75bf510756
+_commit=1cb48cebb9d525e524de0ede46710bb29f54d4a6
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ODROID-C2"
-pkgver=3.14.29
-pkgrel=2
+pkgver=3.14.65
+pkgrel=17
 arch=('aarch64')
 url="https://github.com/hardkernel/linux/tree/odroidc2-3.14.y"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git')
 options=('!strip')
 source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
-        '0001-Bluetooth-allocate-static-minor-for-vhci.patch'
-        '0002-KEYS-Fix-keyring-ref-leak-in-join_session_keyring.patch'
+        "git+https://github.com/mdrjr/c2_bootini.git"
+        '0001-add-extra-errata-843419-build-flags.patch'
         'config'
-        'linux.preset')
-md5sums=('6651c5f790f50cb095e7dc51a02d889a'
-         '1b8e6672f31b17d4f2f18b5991edae5e'
-         '790ea64513d1b6e7497f8cecdb10780b'
-         '3a08cd5c4474c4fcbd070a3b35966cd4'
-         '85fd3026c435ffa6d7c2d7f9767b4251')
+        'linux.preset'
+        'amlogic.service')
+md5sums=('d350c7b5d4c2fa2c9d1e86bd8b164c01'
+         'SKIP'
+         '3c4a5342ac88d86b4bf99e7d0b8b2977'
+         '0116ee44366410c9d7f4a30db0f078c7'
+         '85fd3026c435ffa6d7c2d7f9767b4251'
+         'b8956789318f49cec5b8bb0b41654a9b')
 
 prepare() {
   cd "${srcdir}/${_srcname}"
-
-  git apply ../0001-Bluetooth-allocate-static-minor-for-vhci.patch
-  git apply ../0002-KEYS-Fix-keyring-ref-leak-in-join_session_keyring.patch
 
   cat "${srcdir}/config" > ./.config
 
@@ -39,6 +38,9 @@ prepare() {
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
+
+  patch -p1 -i ../0001-add-extra-errata-843419-build-flags.patch
+  cp include/linux/compiler-gcc5.h include/linux/compiler-gcc6.h
 }
 
 build() {
@@ -74,7 +76,7 @@ build() {
 
 _package() {
   pkgdesc="The Linux Kernel and modules - ${_desc}"
-  depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
+  depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7' 'fbset')
   optdepends=('crda: to set the correct wireless channels of your country')
   provides=('kernel26' "linux=${pkgver}")
   conflicts=('linux')
@@ -129,6 +131,10 @@ _package() {
 
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/lib/modules/${_kernver}/build/vmlinux"
+
+  # install amlogic hdmi init script/service
+  install -Dm644 "${srcdir}/amlogic.service" "${pkgdir}/usr/lib/systemd/system/amlogic.service"  
+  install -Dm755 "${srcdir}/c2_bootini/c2_init.sh" "${pkgdir}/usr/bin/amlogic.sh"
 }
 
 _package-headers() {
@@ -148,7 +154,7 @@ _package-headers() {
 
   mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/include"
 
-  for i in acpi asm-generic config crypto drm generated keys linux math-emu \
+  for i in acpi asm-generic clocksource config crypto drm generated keys linux math-emu \
     media net pcmcia scsi sound trace uapi video xen; do
     cp -a include/${i} "${pkgdir}/usr/lib/modules/${_kernver}/build/include/"
   done
