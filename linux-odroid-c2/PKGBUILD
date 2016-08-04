@@ -24,7 +24,7 @@ source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
 md5sums=('d350c7b5d4c2fa2c9d1e86bd8b164c01'
          'SKIP'
          '3c4a5342ac88d86b4bf99e7d0b8b2977'
-         '0116ee44366410c9d7f4a30db0f078c7'
+         'e58868fb03ae0e7f7fa97645aa83df89'
          '85fd3026c435ffa6d7c2d7f9767b4251'
          'b8956789318f49cec5b8bb0b41654a9b')
 
