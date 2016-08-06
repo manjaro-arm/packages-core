@@ -21,5 +21,3 @@ exit 0
 post_remove() {
 exit 0
 }
-
-#Testing for build hook!
