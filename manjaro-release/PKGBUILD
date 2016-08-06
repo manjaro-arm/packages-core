@@ -2,7 +2,7 @@
 
 pkgname=manjaro-release
 pkgver=16.08
-pkgrel=2
+pkgrel=3
 pkgdesc="Manjaro's release definition"
 arch=("any")
 url="http://manjarolinux.org/"
