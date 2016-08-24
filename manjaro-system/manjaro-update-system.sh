@@ -32,16 +32,6 @@ check_pkgs()
 
 
 post_upgrade() {
-
-	#Init pacman-key
-          pacman-key --init
-
-	# importing dodgejcr's signature
-		# running dirmngr helps prevent pacman-key from failing to connect to servers
-		dirmngr </dev/null
-		msg "Get dodgejcr's signature ..."
-		pacman-key -r CC37B7EC
-		pacman-key --lsign-key CC37B7EC
 		
 	# Importing Build servers signature
 		#same as above
@@ -49,4 +39,10 @@ post_upgrade() {
 		msg "Get Manjaro ARM Build Server's signature..."
 		pacman-key -r B338D5DF
 		pacman-key --lsign-key B338D5DF
+
+
+	#Add GPU temp udev rule
+#	        msg "Adding udev rule for gpu temp..."
+#		echo 'SUBSYSTEM=="vchiq", GROUP="video", MODE="0660"' > /etc/udev/rules.d/99-input.rules 
+		
 }

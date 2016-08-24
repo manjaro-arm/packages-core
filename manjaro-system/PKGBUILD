@@ -16,3 +16,6 @@ depends=('pacman>=4.2' 'coreutils' 'sed' 'awk')
 provides=('pacman=4.1.2') # to fix pacman 4.2 and openrc 1.10.0 update
 install=manjaro-update-system.sh
 
+
+
+
