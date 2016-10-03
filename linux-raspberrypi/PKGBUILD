@@ -1,17 +1,17 @@
-# Maintainer: Dave Higham <pepedog@archlinuxarm.org>
-# Maintainer: Kevin Mihelich <kevin@archlinuxarm.org>
-# Maintainer: Oleg Rakhmanov <oleg@archlinuxarm.org>
+# Maintainer: dodgejcr@manjaro-arm.org
+# Contributor: Dave Higham <pepedog@archlinuxarm.org>
+# Contributor: Kevin Mihelich <kevin@archlinuxarm.org>
+# Contributor: Oleg Rakhmanov <oleg@archlinuxarm.org>
 
-# NOTE: Packages replace linux-raspberrypi-latest, remove if that package comes back
 
 buildarch=20
 
 pkgbase=linux-raspberrypi
-_commit=cff67c7e03f4333149f2a8f6eafd3bc44475114a
+_commit=c2a1d975537fcac01da80ce34f10bc491620a64e
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="Raspberry Pi"
-pkgver=4.4.16
+pkgver=4.4.23
 pkgrel=1
 bfqver=v7r11
 arch=('armv6h' 'armv7h')
@@ -29,7 +29,7 @@ source=("https://github.com/raspberrypi/linux/archive/${_commit}.tar.gz"
         'cmdline.txt'
         'config.v6'
         'config.v7')
-md5sums=('1ceea2c6799d61be6aa5ef3c1662b4a2'
+md5sums=('7c4fa7caeba51b89b73ba573cada4ba7'
          'SKIP'
          'c1d7fcfe88edb658375089c0a9cc1811'
          '953133d5e387de2ad79ac0ae5c27cb6b'
@@ -38,8 +38,8 @@ md5sums=('1ceea2c6799d61be6aa5ef3c1662b4a2'
          '8c3cb6d8f0609b43f09d083b4006ec5a'
          'f95eb9c22c18722e30fc28a5640aeba5'
          '60bc3624123c183305677097bcd56212'
-         '4ac1530b23ea70e0dec0f38545016d78'
-         '18ee58f330865717826ae197bf278f63')
+         'cee89faa43b4a25fd7ed9a9f98c797ea'
+         '0894ed52ec3f84e40f5159b595164720')
 
 prepare() {
   cd "${srcdir}/${_srcname}"
