@@ -10,7 +10,7 @@ license=('GPL2')
 depends=('lsb-release')
 source=('lsb-release')
 install="manjaro-release.install"
-sha256sums=('109451256899be08a3a9d759bb3acf16ac6c84fd2ad566e35eeb7aeda2e6c2c7')
+sha256sums=('cea457839bfbc4654c96a6f914c686fd61fe8e809536be23828a6f0a3cd33585')
 
 package() {
     # Copy files
