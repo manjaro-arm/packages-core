@@ -2,7 +2,7 @@
 # arg 2:  the old package version
 
 KERNEL_NAME=-odroid-xu3
-KERNEL_VERSION=3.10.92-5-MANJARO-ARM
+KERNEL_VERSION=3.10.104-1-MANJARO-ARM
 
 post_install () {
   # updating module dependencies

@@ -1,37 +1,39 @@
-# TI AM335x Beaglebone (Black)
+# Beaglebone Black
+# Maintainer: dodgejcr <dodgejcr@manjaro-arm.org>
 # Maintainer: Kevin Mihelich <kevin@archlinuxarm.org>
 
 buildarch=4
 
 pkgbase=linux-am33x
-_srcname=linux-4.7
+_srcname=linux-4.8
 _kernelname=${pkgbase#linux}
 _desc="TI AM335x Beaglebone (Black)"
-pkgver=4.7.0
+pkgver=4.8.5
 pkgrel=1
-rcnrel=bone0
+rcnrel=bone2
 arch=('armv7h')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'dtc-overlay')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-        #"http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "http://rcn-ee.com/deb/sid-armhf/v${pkgver}-${rcnrel}/patch-${pkgver%.0}-${rcnrel}.diff.gz"
         "git+https://github.com/RobertCNelson/bb.org-overlays.git"
         '0001-add-lcd-cape-for-chiliboard.patch'
         'config')
-md5sums=('5276563eb1f39a048e4a8a887408c031'
-         '0145ce5a83696306b58d98e60aa5fd18'
+md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
+         '3b00c3fcfbe05e3cb7702e8db6fee28b'
+         'd7b1cd88ef96431e84fee913af0eb334'
          'SKIP'
-         '3cd24d1cc05e9229b49d6922208c6fb2'
-         'ced9213f88f7a782f2c8e599ea38352d')
+         '0cd56301c128f5ea412ab41bed00dabc'
+         'b02fd99d43afa2cda8d9f4e09f5e0409')
 
 prepare() {
   cd "${srcdir}/${_srcname}"
 
   # add upstream patch
-  #git apply --whitespace=nowarn "${srcdir}/patch-${pkgver}"
+  git apply --whitespace=nowarn "${srcdir}/patch-${pkgver}"
 
   # RCN patch
   git apply ../patch-${pkgver%.0}-${rcnrel}.diff
@@ -153,7 +155,7 @@ _package-headers() {
   mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/include"
 
   for i in acpi asm-generic config crypto drm generated keys linux math-emu \
-    media net pcmcia scsi sound trace uapi video xen; do
+    media net pcmcia scsi soc sound trace uapi video xen; do
     cp -a include/${i} "${pkgdir}/usr/lib/modules/${_kernver}/build/include/"
   done
 
