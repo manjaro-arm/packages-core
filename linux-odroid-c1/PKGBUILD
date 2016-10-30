@@ -4,11 +4,11 @@
 buildarch=4
 
 pkgbase=linux-odroid-c1
-_commit=c85ad1bda709443ef3d3f37b5b2f9ffc4a755283
+_commit=3c68a072ac12a563d9646bf352455b7e2e4389c0
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ODROID-C1"
-pkgver=3.10.96
+pkgver=3.10.104
 pkgrel=1
 arch=('armv7h')
 url="https://github.com/hardkernel/linux"
@@ -17,19 +17,15 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools')
 options=('!strip')
 source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
         "git+https://github.com/mdrjr/c1_bootini.git"
-        '0001-gcc-5.1-fix-for-mac-address.patch'
         'config'
         'amlogic.service')
-md5sums=('62f20fcab86b0c8249711af50c0ab943'
+md5sums=('fea3aa40cf01e969686d2eb19026d171'
          'SKIP'
-         '969cd9ee3116cdd18fed121c87094065'
          'd48b67cdf67a0a002037a21f188e83fd'
          'b8956789318f49cec5b8bb0b41654a9b')
 
 prepare() {
   cd "${srcdir}/${_srcname}"
-
-  git apply ../0001-gcc-5.1-fix-for-mac-address.patch
 
   cat "${srcdir}/config" > ./.config
 

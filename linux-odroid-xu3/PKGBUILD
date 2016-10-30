@@ -4,29 +4,42 @@
 buildarch=4
 
 pkgbase=linux-odroid-xu3
-_commit=e7233384979e0f954dcfb5276feab5baab533eae
+_commit=a7893ff53062b5f4e30e54e1724a5a7f6238a86a
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ODROID-XU3"
-pkgver=3.10.92
-pkgrel=5
+pkgver=3.10.104
+pkgrel=1
+bfqver=v7r8
+
 arch=('armv7h')
 url="https://github.com/hardkernel/linux"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git')
 options=('!strip')
 source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
-        'kernel-CVE-2016-0728.patch'
-        'config')
-md5sums=('30c36a14f8be4fd73f072e5d4f2e13ad'
-         '6470e9783bd1c7a8feddc2d67f07afd5'
-         '94a8a1caa312317ca6587edb2f672af8')
+        'config'
+        "ftp://teambelgium.net/bfq/patches/${pkgver:0:4}.8+-${bfqver}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${bfqver}-${pkgver:0:4}.8.patch"
+        "ftp://teambelgium.net/bfq/patches/${pkgver:0:4}.8+-${bfqver}/0002-block-introduce-the-BFQ-${bfqver}-I-O-sched-for-${pkgver:0:4}.8.patch"
+        "ftp://teambelgium.net/bfq/patches/${pkgver:0:4}.8+-${bfqver}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${bfqver}-for-${pkgver:0:4}.8+.patch"
+        'exynos-gcc6.patch')
+md5sums=('fdefb86375e589ee9d40df4bccc82392'
+         '94a8a1caa312317ca6587edb2f672af8'
+         '003f1554be6b672100d2f2401a574d92'
+         '12ffe57584b4f2adcc3e184dc6948772'
+         '9e78f9f5364f8ebb981aeb235dcb7415'
+         'd4c327797fb7124076541859ac3d4e90')
 
 prepare() {
   cd "${srcdir}/${_srcname}"
 
-  # CVE-2016-0728
-  git apply ../kernel-CVE-2016-0728.patch
+  # Patch for GCC 6 compatibility
+  patch -sNp1 -i ${srcdir}/exynos-gcc6.patch
+
+  # Add BFQ patches
+  patch -sNp1 -i "${srcdir}/0001-block-cgroups-kconfig-build-bits-for-BFQ-${bfqver}-${pkgver:0:4}.8.patch"
+  patch -sNp1 -i "${srcdir}/0002-block-introduce-the-BFQ-${bfqver}-I-O-sched-for-${pkgver:0:4}.8.patch"
+  patch -sNp1 -i "${srcdir}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${bfqver}-for-${pkgver:0:4}.8+.patch"
 
   cat "${srcdir}/config" > ./.config
 
@@ -88,6 +101,8 @@ _package() {
   make INSTALL_MOD_PATH="${pkgdir}" modules_install
   cp arch/$KARCH/boot/zImage "${pkgdir}/boot/zImage"
   cp arch/$KARCH/boot/dts/*.dtb "${pkgdir}/boot/dtbs"
+  cp "${pkgdir}/boot/dtbs/exynos5422-odroidxu3.dtb" "${pkgdir}/boot/dtbs/exynos5422-odroidxu3-lite.dtb"
+  cp "${pkgdir}/boot/dtbs/exynos5422-odroidxu3.dtb" "${pkgdir}/boot/dtbs/exynos5422-odroidxu4.dtb"
 
   # set correct depmod command for install
   sed \
