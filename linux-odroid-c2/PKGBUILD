@@ -4,12 +4,12 @@
 buildarch=8
 
 pkgbase=linux-odroid-c2
-_commit=1cb48cebb9d525e524de0ede46710bb29f54d4a6
+_commit=8a68ab963a9677735f3f65181bb3f35c8f50412d
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ODROID-C2"
-pkgver=3.14.65
-pkgrel=17
+pkgver=3.14.79
+pkgrel=9
 arch=('aarch64')
 url="https://github.com/hardkernel/linux/tree/odroidc2-3.14.y"
 license=('GPL2')
@@ -21,10 +21,10 @@ source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
         'config'
         'linux.preset'
         'amlogic.service')
-md5sums=('d350c7b5d4c2fa2c9d1e86bd8b164c01'
+md5sums=('95d70fabd68e5bd62f198100c8119b29'
          'SKIP'
          '3c4a5342ac88d86b4bf99e7d0b8b2977'
-         'e58868fb03ae0e7f7fa97645aa83df89'
+         '8a3f9f091ae2f2a4f71f1b630a60c46d'
          '85fd3026c435ffa6d7c2d7f9767b4251'
          'b8956789318f49cec5b8bb0b41654a9b')
 
@@ -40,7 +40,6 @@ prepare() {
   sed -i '2iexit 0' scripts/depmod.sh
 
   patch -p1 -i ../0001-add-extra-errata-843419-build-flags.patch
-  cp include/linux/compiler-gcc5.h include/linux/compiler-gcc6.h
 }
 
 build() {
