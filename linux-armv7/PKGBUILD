@@ -1,23 +1,24 @@
-# Maintainer
+# ARMv7 multi-platform
+# Maintainer: dodgejcr <dodgejcr@manjaro-arm.org>
 # Contributor: Kevin Mihelich <kevin@archlinuxarm.org>
 
 buildarch=4
 
 pkgbase=linux-armv7
-_srcname=linux-4.8
+_srcname=linux-4.9
 _kernelname=${pkgbase#linux}
 _desc="ARMv7 multi-platform"
-pkgver=4.8.5
+pkgver=4.9.0
 pkgrel=1
-rcnrel=armv7-x4
+rcnrel=armv7-x3
 arch=('armv7h')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
-        "http://rcn-ee.com/deb/stretch-armhf/v${pkgver}-${rcnrel}/patch-${pkgver%.0}-${rcnrel}.diff.gz"
+        #"http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "http://rcn-ee.com/deb/sid-armhf/v${pkgver}-${rcnrel}/patch-${pkgver%.0}-${rcnrel}.diff.gz"
         '0001-ARM-atags-add-support-for-Marvell-s-u-boot.patch'
         '0002-ARM-atags-fdt-retrieve-MAC-addresses-from-Marvell-bo.patch'
         '0003-SMILE-Plug-device-tree-file.patch'
@@ -25,36 +26,23 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '0005-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch'
         '0006-ARM-TLV320AIC23-SoC-Audio-Codec-Fix-errors-reported-.patch'
         '0007-set-default-cubietruck-led-triggers.patch'
-        '0008-USB-armory-support.patch'
-        '0009-ARM-dts-imx6ul-pico-hobbit-Add-Wifi-support.patch'
-        '0010-exynos4412-odroid-set-higher-minimum-buck2-regulator.patch'
-        '0011-usb-musb-Fix-hardirq-safe-hardirq-unsafe-lock-order-.patch'
-        '0012-usb-musb-Call-pm_runtime-from-musb_gadget_queue.patch'
-        '0013-phy-twl4030-usb-better-handle-musb_mailbox-failure.patch'
-        '0014-Revert-gpu-drm-omapdrm-dss-of-add-missing-of_node_pu.patch'
+        '0008-exynos4412-odroid-set-higher-minimum-buck2-regulator.patch'
         'config'
         'cmdline'
         'kernel.its'
         'kernel.keyblock'
         'kernel_data_key.vbprivk')
-md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
-         '3b00c3fcfbe05e3cb7702e8db6fee28b'
-         'd3938b17733dd7d6845a857921403529'
-         '35022f86112a9bd877d5cf04fb5d26c3'
-         '46f8df5129747619801f7b2347c17857'
-         '62930c53525f265fbc5d0ed9f58f19b9'
-         '3389b8a5919f9ee8df49cd1a56b6726c'
-         'dbfb9c7528e841fcf8904b78e22887e4'
-         '354499d62629c9d38a39aeb044b586f0'
-         '0bd799f038a4a2550116e1a05e9bc553'
-         'f58741b1fc78133aac6c7e4b289d3780'
-         '857e91c8ace7e60e10bcfeddc97a30f8'
-         '5b7f1502bd4b5ca32ade0b796acdb092'
-         'bce4eff1317ab09cbff2ebbaab7ade90'
-         '72ba4bb39771f3ce3f5fa01ae327a9bd'
-         'ce698dca6cdc3a158037cd6199d57741'
-         'fe4ee64c38b0d144b5bb99239a3123f7'
-         '06d0e84e60195a85ed50a7d813f57d12'
+md5sums=('0a68ef3615c64bd5ee54a3320e46667d'
+         'addaa2dbe47e73ae48b1aa0a7f54fb3a'
+         '7bad9743fd2f1690f479cbbec5a556ab'
+         '57998a8dbf42d2237f2f3a650b93ef26'
+         '75e392a161842813d0ff3d0beaf68038'
+         '5840b71b7b2600388aa9a1195a5af528'
+         '25c3f00750a1aa951b857bf06ec79a8e'
+         'dd1c99be98c43f06a07aa14fc47d6e3e'
+         'ef825f8c3563a87bab10f4782e7a0efc'
+         'ef5fd8e682fed9dce4bc3d1c821acbd1'
+         '23a9dda3c1a587bf97bb2e118b28db87'
          '1813b39074d01af6548951764a0f6444'
          '4f2379ed84258050edb858ee8d281678'
          '61c5ff73c136ed07a7aadbf58db3d96a'
@@ -64,7 +52,7 @@ prepare() {
   cd "${srcdir}/${_srcname}"
 
   # add upstream patch
-  git apply --whitespace=nowarn ../patch-${pkgver}
+  #git apply --whitespace=nowarn ../patch-${pkgver}
 
   # RCN patch
   git apply ../patch-${pkgver%.0}-${rcnrel}.diff
@@ -77,13 +65,7 @@ prepare() {
   git apply ../0005-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch
   git apply ../0006-ARM-TLV320AIC23-SoC-Audio-Codec-Fix-errors-reported-.patch
   git apply ../0007-set-default-cubietruck-led-triggers.patch
-  git apply ../0008-USB-armory-support.patch
-  git apply ../0009-ARM-dts-imx6ul-pico-hobbit-Add-Wifi-support.patch
-  git apply ../0010-exynos4412-odroid-set-higher-minimum-buck2-regulator.patch
-  git apply ../0011-usb-musb-Fix-hardirq-safe-hardirq-unsafe-lock-order-.patch
-  git apply ../0012-usb-musb-Call-pm_runtime-from-musb_gadget_queue.patch
-  git apply ../0013-phy-twl4030-usb-better-handle-musb_mailbox-failure.patch
-  git apply ../0014-Revert-gpu-drm-omapdrm-dss-of-add-missing-of_node_pu.patch
+  git apply ../0008-exynos4412-odroid-set-higher-minimum-buck2-regulator.patch
 
   cat "${srcdir}/config" > ./.config
 

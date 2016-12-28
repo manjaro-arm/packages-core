@@ -1,7 +1,7 @@
-From 7863afeb305484f5ce7f9c16c36f2e809b832a6f Mon Sep 17 00:00:00 2001
+From 51597a7978cb561ba33d2fe4f9fb3aa07f448cc4 Mon Sep 17 00:00:00 2001
 From: Kevin Mihelich <kevin@archlinuxarm.org>
 Date: Fri, 5 Sep 2014 15:43:56 -0600
-Subject: [PATCH 04/14] fix mvsdio eMMC timing
+Subject: [PATCH 4/8] fix mvsdio eMMC timing
 
 These changes from Globalscale change the MMC timing to allow the eMMC versions
 of the Mirabox and SMILE Plug to work.
