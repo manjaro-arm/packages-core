@@ -1,10 +1,11 @@
 # ODROID-C1
-# Maintainer: Kevin Mihelich <kevin@archlinuxarm.org>
+# Maintainer: dodgejcr <dodgejcr@manjaro-arm.org>
+# Contributor: Kevin Mihelich <kevin@archlinuxarm.org>
 
 buildarch=4
 
 pkgbase=linux-odroid-c1
-_commit=3c68a072ac12a563d9646bf352455b7e2e4389c0
+_commit=647316d8199babad4cd22309849842e035494f2b
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ODROID-C1"
@@ -17,11 +18,13 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools')
 options=('!strip')
 source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
         "git+https://github.com/mdrjr/c1_bootini.git"
+        '0001-packet-fix-race-condition-in-packet_set_ring.patch'
         'config'
         'amlogic.service')
-md5sums=('fea3aa40cf01e969686d2eb19026d171'
+md5sums=('a0de520404bd83e104ebcc66ef6d1085'
          'SKIP'
-         'd48b67cdf67a0a002037a21f188e83fd'
+         '681ed4c48a9ee2a767f1df806623a9f2'
+         '149cff40460b393b8e3c72bcb9f0aa9f'
          'b8956789318f49cec5b8bb0b41654a9b')
 
 prepare() {
@@ -34,6 +37,8 @@ prepare() {
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
+
+  git apply ../0001-packet-fix-race-condition-in-packet_set_ring.patch
 }
 
 build() {
