@@ -4,12 +4,12 @@
 buildarch=8
 
 pkgbase=linux-odroid-c2
-_commit=8a68ab963a9677735f3f65181bb3f35c8f50412d
+_commit=1b4fefdf20a84b17d5b666c0686a12a29adcb848
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ODROID-C2"
 pkgver=3.14.79
-pkgrel=9
+pkgrel=14
 arch=('aarch64')
 url="https://github.com/hardkernel/linux/tree/odroidc2-3.14.y"
 license=('GPL2')
@@ -18,13 +18,15 @@ options=('!strip')
 source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
         "git+https://github.com/mdrjr/c2_bootini.git"
         '0001-add-extra-errata-843419-build-flags.patch'
+        '0002-packet-fix-race-condition-in-packet_set_ring.patch'
         'config'
         'linux.preset'
         'amlogic.service')
-md5sums=('95d70fabd68e5bd62f198100c8119b29'
+md5sums=('f68219ba8faa1ff6caaede2055cfd929'
          'SKIP'
-         '3c4a5342ac88d86b4bf99e7d0b8b2977'
-         '8a3f9f091ae2f2a4f71f1b630a60c46d'
+         '7df92923b447253d37234fec3f3c48b1'
+         '09ddfd3c3e1b76cd2ffb2e9a61d08bbe'
+         'ed5d9373b9c1de1c824010b8176af292'
          '85fd3026c435ffa6d7c2d7f9767b4251'
          'b8956789318f49cec5b8bb0b41654a9b')
 
@@ -40,6 +42,7 @@ prepare() {
   sed -i '2iexit 0' scripts/depmod.sh
 
   patch -p1 -i ../0001-add-extra-errata-843419-build-flags.patch
+  patch -p1 -i ../0002-packet-fix-race-condition-in-packet_set_ring.patch
 }
 
 build() {
