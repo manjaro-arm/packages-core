@@ -5,7 +5,7 @@
 
 pkgname=pacman-mirrorlist
 pkgver=20$(date +%y%m%d)
-pkgrel=2
+pkgrel=3
 pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
 depends=('python')
