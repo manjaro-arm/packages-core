@@ -2,7 +2,7 @@
 # arg 2:  the old package version
 
 KERNEL_NAME=-raspberrypi
-KERNEL_VERSION=4.4.28-1-MANJARO-ARM
+KERNEL_VERSION=4.9.73-2-MANJARO-ARM
 
 disable_cma() {
   if [[ -f /boot/config.txt && $(grep '^cma' /boot/config.txt) != '' ]]; then
@@ -43,4 +43,8 @@ post_upgrade() {
     echo "________________________________________________________________________________"
     echo ""
   fi
+}
+
+post_remove() {
+  rm -f boot/initramfs-linux.img
 }

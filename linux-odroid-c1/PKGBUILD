@@ -1,16 +1,15 @@
 # ODROID-C1
-# Maintainer: dodgejcr <dodgejcr@manjaro-arm.org>
-# Contributor: Kevin Mihelich <kevin@archlinuxarm.org>
+# Maintainer: Kevin Mihelich <kevin@archlinuxarm.org>
 
 buildarch=4
 
 pkgbase=linux-odroid-c1
-_commit=647316d8199babad4cd22309849842e035494f2b
+_commit=daf15c96939bae35227c78a0f6d78fce4cafe885
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ODROID-C1"
-pkgver=3.10.104
-pkgrel=1
+pkgver=3.10.107
+pkgrel=2
 arch=('armv7h')
 url="https://github.com/hardkernel/linux"
 license=('GPL2')
@@ -18,13 +17,13 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools')
 options=('!strip')
 source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
         "git+https://github.com/mdrjr/c1_bootini.git"
-        '0001-packet-fix-race-condition-in-packet_set_ring.patch'
+        '0001-disable-pie.patch'
         'config'
         'amlogic.service')
-md5sums=('a0de520404bd83e104ebcc66ef6d1085'
+md5sums=('483a2c9708118cf1acb9925f03108c8a'
          'SKIP'
-         '681ed4c48a9ee2a767f1df806623a9f2'
-         '149cff40460b393b8e3c72bcb9f0aa9f'
+         'a2329e6dcdc856559fbd8b0847b3b55d'
+         '9e3101682aa20ac4036d43aa3c8c7aaa'
          'b8956789318f49cec5b8bb0b41654a9b')
 
 prepare() {
@@ -38,7 +37,7 @@ prepare() {
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
 
-  git apply ../0001-packet-fix-race-condition-in-packet_set_ring.patch
+  git apply ../0001-disable-pie.patch
 }
 
 build() {
