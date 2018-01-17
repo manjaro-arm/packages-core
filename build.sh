@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Define variables
-WORKSPACE="/home/strit/build-dir/"
+WORKSPACE="/home/strit/build-dir"
 #Display messages
  msg() {
     ALL_OFF="\e[1;0m"
