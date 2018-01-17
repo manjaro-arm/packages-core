@@ -39,7 +39,7 @@ sudo systemd-nspawn -D $WORKSPACE/$_ARCH/ -u manjaro sudo pacman -Syyu --noconfi
 #cp package to rootfs
 msg "Copying build directory {$1/$2} to rootfs"
 #printf "\n\n===== Copying the build directory {$1/$2} to rootfs =====\n" >> "$_LOGDIR"
-sudo cp -rp /var/lib/jenkins/workspace/filesystem-test/packages-$1/$2/ $WORKSPACE/$_ARCH/home/manjaro/build/ #>> "$_LOGDIR"
+sudo cp -rp /var/lib/jenkins/workspace/filesystem-test/$2/ $WORKSPACE/$_ARCH/home/manjaro/build/ #>> "$_LOGDIR"
 
 #build package
 msg "Building {$2}"
