@@ -44,8 +44,8 @@ sudo cp -rp /var/lib/jenkins/workspace/filesystem-test/$2/ $WORKSPACE/$_ARCH/hom
 #build package
 msg "Building {$2}"
 #printf "\n\n===== Building {$2} =====\n" >> "$_LOGDIR"
-sudo systemd-nspawn -D $_ARCH/ -u manjaro --chdir=/home/manjaro/ sudo chown -R manjaro build/
-#sudo systemd-nspawn -D $_ARCH/ -u manjaro --chdir=/home/manjaro/ sudo chmod -R 777 build/
+#sudo systemd-nspawn -D $_ARCH/ -u manjaro --chdir=/home/manjaro/ sudo chown -R manjaro build/
+sudo systemd-nspawn -D $_ARCH/ -u manjaro --chdir=/home/manjaro/ sudo chmod -R 777 build/
 sudo systemd-nspawn -D $WORKSPACE/$_ARCH/ -u manjaro --chdir=/home/manjaro/build/ makepkg -scr --noconfirm #&>> "$_LOGDIR"
 #read -p "Press [Enter] to continue"
 if ls $WORKSPACE/$_ARCH/home/manjaro/build/*.pkg.tar.xz* 1> /dev/null 2>&1; then
