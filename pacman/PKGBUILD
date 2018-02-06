@@ -7,15 +7,15 @@
 # Maintainer: Rob McCathie <rob@manjaro.org>
 
 pkgname=pacman
-pkgver=5.0.1
-pkgrel=6
+pkgver=5.0.2
+pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
 arch=('i686' 'x86_64' 'armv6h' 'aarch64' 'armv7h')
 url="http://www.archlinux.org/pacman/"
 license=('GPL')
 groups=('base' 'base-devel')
 depends=('bash>=4.2.042-2' 'glibc>=2.17-2' 'libarchive>=3.1.2' 'curl>=7.39.0'
-         'gpgme')
+         'gpgme' 'archlinux-keyring' 'manjaro-keyring' 'manjaro-arm-keyring')
 checkdepends=('python2' 'fakechroot')
 makedepends=('asciidoc')
 optdepends=('haveged: for pacman-init.service')
@@ -127,7 +127,7 @@ package() {
   install -m644 $srcdir/pacman-init.service $pkgdir/usr/lib/systemd/system/pacman-init.service
 }
 
-sha256sums=('8bd5f407ce8e05c4be8f1c4be4d8dcc8550ea5e494937da5220ea2c23cbb8e04'
+sha256sums=('dfd36086ad68564bcd977f4a1fafe51dd328acd4a95093ac4bf1249be9c41f0e'
             '11d4d8aa2eb9f8d15f5f61835573a8140c052b8e17655f666cd81205841fd010'
             '64d0200bc16e182ca45b74fb2d633c395e5ecfb8c662c557f056326fabf4836b'
             '0447073204ff2ee92cf9d99cd12f80735dc79abbf7d2eeec43413f91da917a72'
