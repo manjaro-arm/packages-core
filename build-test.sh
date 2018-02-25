@@ -50,19 +50,19 @@ sudo systemd-nspawn -D $_ROOTFS/ -u manjaro --chdir=/home/manjaro/ sudo chmod -R
 sudo systemd-nspawn -D $_ROOTFS/ -u manjaro --chdir=/home/manjaro/build/ makepkg -scr --noconfirm
 #read -p "Press [Enter] to continue"
 
-if ls $_ROOTFS/home/manjaro/build/*.pkg.tar.xz* 1> /dev/null 2>&1; then
+#if ls $_ROOTFS/home/manjaro/build/*.pkg.tar.xz* 1> /dev/null 2>&1; then
     #pull package out of rootfs
-    msg "!!!!! +++++ ===== Package Succeeded ===== +++++ !!!!!"
-    msg "===== Extracting finish/home/jenkins/build/ed package out of rootfs ====="
-    cp $_ROOTFS/home/manjaro/build/*.pkg.tar.xz* $_PKGDIR/$3/$1/
+#    msg "!!!!! +++++ ===== Package Succeeded ===== +++++ !!!!!"
+#    msg "===== Extracting finish/home/jenkins/build/ed package out of rootfs ====="
+#    cp $_ROOTFS/home/manjaro/build/*.pkg.tar.xz* $_PKGDIR/$3/$1/
 
     #clean up rootfs
-    msg "===== Cleaning rootfs ====="
-    sudo rm -r $_ROOTFS/home/manjaro/build/ > /dev/null
+#    msg "===== Cleaning rootfs ====="
+#    sudo rm -r $_ROOTFS/home/manjaro/build/ > /dev/null
 
-else
-    msg "!!!!! ++++++ ===== Package failed to build ===== +++++ !!!!!"
-    msg "cleaning rootfs"
-    sudo rm -r $_ROOTFS/home/manjaro/build/ > /dev/null
-    exit 1
-fi
+#else
+#    msg "!!!!! ++++++ ===== Package failed to build ===== +++++ !!!!!"
+#    msg "cleaning rootfs"
+#    sudo rm -r $_ROOTFS/home/manjaro/build/ > /dev/null
+#    exit 1
+#fi
