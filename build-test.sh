@@ -18,12 +18,12 @@ fi
 
 ######## Some globals to set ########
 #Only set this one
-_BUILDDIR=/opt/jenkins/build-dir
+_BUILDDIR=/opt/build-dir
 
 #Leave these alone
 _ROOTFS=$_BUILDDIR/$_ARCH
 _REPODIR=$_BUILDDIR/repo
-_PKGDIR=/opt/manjaro-arm-repo/rootfs/root/mirror
+_PKGDIR=/opt/repo/mirror
 
 
 
