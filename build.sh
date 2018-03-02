@@ -30,8 +30,8 @@ _PKGDIR=/opt/repo/mirror/stable/
 
 #enable qemu binaries
 msg "===== Enabling qemu binaries ====="
-sudo update-binfmts --enable qemu-arm
-sudo update-binfmts --enable qemu-aarch64 
+update-binfmts --enable qemu-arm
+update-binfmts --enable qemu-aarch64 
 
 #pulling git repos
 #msg "===== Updating the github repo ====="
@@ -39,16 +39,16 @@ sudo update-binfmts --enable qemu-aarch64
 
 #updating rootfs 
 msg "===== Updating the rootfs ====="
-sudo systemd-nspawn -D $_ROOTFS/ -u manjaro sudo pacman -Syyu --noconfirm
+systemd-nspawn -D $_ROOTFS/ -u manjaro sudo pacman -Syyu --noconfirm
 
 #cp package to rootfs
 msg "===== Copying build directory {$1/$2} to rootfs ====="
-sudo cp -rp /var/lib/jenkins/workspace/$2/$2/ $_ROOTFS/home/manjaro/build/
+cp -rp /var/lib/jenkins/workspace/$2/$2/ $_ROOTFS/home/manjaro/build/
 
 #build package
 msg "===== Building {$2} ====="
-sudo systemd-nspawn -D $_ROOTFS/ -u manjaro --chdir=/home/manjaro/ sudo chmod -R 777 build/
-sudo systemd-nspawn -D $_ROOTFS/ -u manjaro --chdir=/home/manjaro/build/ makepkg -scr --noconfirm --sign
+systemd-nspawn -D $_ROOTFS/ -u manjaro --chdir=/home/manjaro/ sudo chmod -R 777 build/
+systemd-nspawn -D $_ROOTFS/ -u manjaro --chdir=/home/manjaro/build/ makepkg -scr --noconfirm --sign
 #read -p "Press [Enter] to continue"
 
 if ls $_ROOTFS/home/manjaro/build/*.pkg.tar.xz* 1> /dev/null 2>&1; then
@@ -59,11 +59,11 @@ if ls $_ROOTFS/home/manjaro/build/*.pkg.tar.xz* 1> /dev/null 2>&1; then
 
     #clean up rootfs
     msg "===== Cleaning rootfs ====="
-    sudo rm -r $_ROOTFS/home/manjaro/build/ > /dev/null
+    rm -r $_ROOTFS/home/manjaro/build/ > /dev/null
 
 else
     msg "!!!!! ++++++ ===== Package failed to build ===== +++++ !!!!!"
     msg "cleaning rootfs"
-    sudo rm -r $_ROOTFS/home/manjaro/build/ > /dev/null
+    rm -r $_ROOTFS/home/manjaro/build/ > /dev/null
     exit 1
 fi
