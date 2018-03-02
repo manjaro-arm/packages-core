@@ -6,8 +6,8 @@
 # Maintainer: Philip Müller <philm@manjaro.org>
 
 pkgname=filesystem
-pkgver=2018.01
-pkgrel=11
+pkgver=2018.03
+pkgrel=1
 pkgdesc='Base filesystem'
 arch=('armv6h' 'armv7h' 'aarch64' 'i686' 'x86_64')
 license=('GPL')
