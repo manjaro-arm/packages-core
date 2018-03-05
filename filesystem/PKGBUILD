@@ -7,7 +7,7 @@
 
 pkgname=filesystem
 pkgver=2018.03
-pkgrel=1
+pkgrel=2
 pkgdesc='Base filesystem'
 arch=('armv6h' 'armv7h' 'aarch64' 'i686' 'x86_64')
 license=('GPL')
