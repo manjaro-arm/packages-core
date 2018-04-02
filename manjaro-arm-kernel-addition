@@ -1,0 +1,5 @@
+ # Add this to the PKGBUILD of the kernel in the start of the prepare() function.
+ 
+ # changing the config to manjaro-arm
+  sed -i s/'CONFIG_LOCALVERSION="-ARCH"'/'CONFIG_LOCALVERSION="-MANJARO-ARM"'/ config
+  sed -i s/'# CONFIG_NTFS_FS is not set'/'CONFIG_NTFS_FS=y\nCONFIG_NTFS_RW=y\nCONFIG_NTFS_DEBUG=n'/ config 
