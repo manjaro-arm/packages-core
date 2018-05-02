@@ -1,5 +1,5 @@
 # packages-core
-PKGBUILDS for core repository of Manjaro-Arm
+PKGBUILDS for core repository of Manjaro-Arm, except kernels.
 
 | Package name | Build Status |
 | ------------ | ------------ |
