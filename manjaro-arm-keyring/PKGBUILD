@@ -7,7 +7,7 @@
 # Contributor: Dan Johansen <strit@strits.dk>
 
 pkgname=manjaro-arm-keyring
-pkgver=20180509
+pkgver=20180513
 pkgrel=1
 pkgdesc='Manjaro-Arm PGP keyring'
 arch=('any')
@@ -20,8 +20,8 @@ source=('Makefile'
         'manjaro-arm-trusted')
 sha256sums=('376cd072fea02a830c0b782237d6cd349ca95fe04acde6c7aafe1d5ad9f7861b'
             '1200280dc480dbdf7aace757e21d46794e4f3a6ba788dd5872e115de6ceb6452'
-            '0432850d41d040e1de82b729fa7ec921767e7ee8aa402bb23ff69fc4f90991b9'
-            'c55af48f8b999b894dd0feafb4cc9d795c7e7d0999db89f4293ca47c7797db4e')
+            '01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b'
+            '92df056e94f7e6d845c53f9c097e3f7e9a971f7727161d360d97e146e05eae66')
 
 package() {
 	cd "${srcdir}"
