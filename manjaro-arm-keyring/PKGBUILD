@@ -7,7 +7,7 @@
 # Contributor: Dan Johansen <strit@strits.dk>
 
 pkgname=manjaro-arm-keyring
-pkgver=20180513
+pkgver=20180515
 pkgrel=1
 pkgdesc='Manjaro-Arm PGP keyring'
 arch=('any')
