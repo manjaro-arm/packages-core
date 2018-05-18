@@ -5,11 +5,11 @@
 buildarch=20
 
 pkgbase=linux-raspberrypi
-_commit=b36f4e9e198477803d29861e02d3ea00fe5e09ab
+_commit=865ddc1393f558198e7e7ce70928ff2e49c4f7f6
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="Raspberry Pi"
-pkgver=4.14.31
+pkgver=4.14.39
 pkgrel=1
 arch=('armv6h' 'armv7h')
 url="http://www.kernel.org/"
@@ -22,20 +22,21 @@ source=("https://github.com/raspberrypi/linux/archive/${_commit}.tar.gz"
         'config'
         'linux.preset'
         '99-linux.hook')
-md5sums=('7fdf0ea83e9e7b54fc65dff61e8a3fa3'
+md5sums=('6a9b1c948630c245122e484d2d9d1fd2'
          '7c6b37a1353caccf6d3786bb4161c218'
          '60bc3624123c183305677097bcd56212'
-         '1f30d24828e24c577933b691c905d178'
+         '3a31b9377f176bfd3f23eb9927d656d5'
          '552c43bf6c0225bc213b31ee942b7000'
          '982f9184dfcfbe52110795cf73674334')
 
 prepare() {
- # changing the config to manjaro-arm
+
+   # changing the config to manjaro-arm
   sed -i s/'CONFIG_LOCALVERSION="-ARCH"'/'CONFIG_LOCALVERSION="-MANJARO-ARM"'/ config
-  sed -i s/'# CONFIG_NTFS_FS is not set'/'CONFIG_NTFS_FS=y\nCONFIG_NTFS_RW=y\nCONFIG_NTFS_DEBUG=n'/ config
+  sed -i s/'# CONFIG_NTFS_FS is not set'/'CONFIG_NTFS_FS=y\nCONFIG_NTFS_RW=y\nCONFIG_NTFS_DEBUG=n'/ config 
   
   cd "${srcdir}/${_srcname}"
-  
+
   cat "${srcdir}/config" > ./.config
 
   # add pkgrel to extraversion
