@@ -3,9 +3,10 @@
 
 pkgname=manjaro-release
 pkgver=18.05
-pkgrel=1
+pkgrel=2
 pkgdesc="Manjaro ARM's release definition"
 arch=("any")
+groups=('base')
 url="http://manjaroarm.org/"
 license=('GPL2')
 depends=('lsb-release')

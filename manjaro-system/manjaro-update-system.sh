@@ -39,6 +39,9 @@ post_upgrade() {
 		msg "Get Manjaro ARM Build Server's signature..."
 		pacman-key -r B338D5DF
 		pacman-key --lsign-key B338D5DF
+		msg "Get Oberon's signature for the manjaro keyring.."
+		pacman-key -r 663CA268
+		pacman-key --lsign-key 663CA268
 
 
 	#Add GPU temp udev rule

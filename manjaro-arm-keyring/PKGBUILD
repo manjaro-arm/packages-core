@@ -7,10 +7,11 @@
 # Contributor: Dan Johansen <strit@strits.dk>
 
 pkgname=manjaro-arm-keyring
-pkgver=20180522
+pkgver=20180523
 pkgrel=1
 pkgdesc='Manjaro-Arm PGP keyring'
 arch=('any')
+groups=('base')
 url='http://manjaro-arm.org'
 license=('GPL')
 install="${pkgname}.install"

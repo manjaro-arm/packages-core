@@ -8,6 +8,7 @@ pkgver=20$(date +%y%m%d)
 pkgrel=1
 pkgdesc="Manjaro Linux mirror list for use by pacman"
 arch=('any')
+groups=('base')
 depends=('python')
 makedepends=('git' 'python-babel' 'python-setuptools')
 optdepends=('gtk3: for interactive mode (GUI)' 
