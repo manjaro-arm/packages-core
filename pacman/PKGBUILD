@@ -7,15 +7,16 @@
 # Maintainer: Rob McCathie <rob@manjaro.org>
 
 pkgname=pacman
-pkgver=5.0.2
+pkgver=5.1.0
+_pkgver=1.0.0
 pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
-arch=('i686' 'x86_64' 'armv6h' 'aarch64' 'armv7h')
+arch=('i686' 'x86_64' 'armv7h' 'aarch64')
 url="http://www.archlinux.org/pacman/"
 license=('GPL')
 groups=('base' 'base-devel')
 depends=('bash>=4.2.042-2' 'glibc>=2.17-2' 'libarchive>=3.1.2' 'curl>=7.39.0'
-         'gpgme' 'archlinux-keyring' 'manjaro-keyring' 'manjaro-arm-keyring')
+         'gpgme' 'archlinux-keyring' 'manjaro-keyring' 'manjaro-arm-keyring' 'pacman-mirrorlist')
 checkdepends=('python2' 'fakechroot')
 makedepends=('asciidoc')
 optdepends=('haveged: for pacman-init.service')
@@ -26,61 +27,54 @@ backup=(etc/pacman.conf etc/makepkg.conf)
 install=pacman.install
 options=('strip' 'debug')
 source=(https://sources.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz
-        pacman.conf.armv7h
+        https://sources.archlinux.org/other/community/pacman-contrib/pacman-contrib-$_pkgver.tar.gz
         pacman.conf.armv6h
+        pacman.conf.armv7h
         pacman.conf.aarch64
         makepkg.conf
         pacman-sync-first-option.patch
         etc-pacman.d-gnupg.mount
-        pacman-init.service
-	pacman.conf.aarch64)
+        pacman-init.service)
 
 prepare() {
   cd $srcdir/$pkgname-$pkgver
 
-
   # Manjaro patches
   patch -p1 -i $srcdir/pacman-sync-first-option.patch
-  #patch -p1 -i $srcdir/pacman-updated-locales.patch
-
-  # fix bad translation mistake - corrected in transifex
-  #sed -i 's#pacman-db-update#pacman-db-upgrade#' src/pacman/po/nl.po
 
   ./configure --prefix=/usr --sysconfdir=/etc \
     --localstatedir=/var --enable-doc \
     --with-scriptlet-shell=/usr/bin/bash \
     --with-ldconfig=/usr/bin/ldconfig
-  #rm $srcdir/$pkgname-$pkgver/lib/libalpm/po/*gmo
-  #cd $srcdir/$pkgname-$pkgver/lib/libalpm/po/
-  #make update-gmo
-  #rm $srcdir/$pkgname-$pkgver/scripts/po/*gmo
-  #cd $srcdir/$pkgname-$pkgver/scripts/po/
-  #make update-gmo
-  #rm $srcdir/$pkgname-$pkgver/src/pacman/po/*gmo
-  #cd $srcdir/$pkgname-$pkgver/src/pacman/po/
-  #make update-gmo
 }
 
 build() {
   cd $srcdir/$pkgname-$pkgver
   make V=1
-  make -C contrib
+
+  cd $srcdir/pacman-contrib-$_pkgver
+
+  ./configure \
+      --prefix=/usr \
+      --sysconfdir=/etc \
+      --localstatedir=/var
+  make
 }
 
-#check() {
-#  make -C "$pkgname-$pkgver" check
-#}
+check() {
+  make -C "$pkgname-$pkgver" check
+  make -C pacman-contrib-$_pkgver check
+}
 
 package() {
   cd $srcdir/$pkgname-$pkgver
   make DESTDIR=$pkgdir install
-  make DESTDIR=$pkgdir -C contrib install
 
   # install Arch specific stuff
   install -dm755 $pkgdir/etc
   install -m644 $srcdir/pacman.conf.$CARCH $pkgdir/etc/pacman.conf
   
-  case $CARCH in
+case $CARCH in
     armv6h)
       mycarch="armv6h"
       mychost="armv6l-unknown-linux-gnueabihf"
@@ -96,8 +90,7 @@ package() {
       mychost="aarch64-unknown-linux-gnu"
       myflags="-march=armv8-a "
       ;;
-  esac
-
+esac
   install -m644 $srcdir/makepkg.conf $pkgdir/etc/
   # set things correctly in the default conf file
   sed -i $pkgdir/etc/makepkg.conf \
@@ -115,24 +108,26 @@ package() {
     ln -s pacman "$pkgdir/usr/share/bash-completion/completions/$f"
   done
 
-  install -Dm644 contrib/PKGBUILD.vim "$pkgdir/usr/share/vim/vimfiles/syntax/PKGBUILD.vim"
-
-  # replace rankmirrors
-  rm "$pkgdir/usr/bin/rankmirrors"
-  ln -sfv "/usr/bin/pacman-mirrors" "$pkgdir/usr/bin/rankmirrors"
-
   # install pacman-init
   install -dm755 $pkgdir/usr/lib/systemd/system/
   install -m644 $srcdir/etc-pacman.d-gnupg.mount $pkgdir/usr/lib/systemd/system/etc-pacman.d-gnupg.mount
   install -m644 $srcdir/pacman-init.service $pkgdir/usr/lib/systemd/system/pacman-init.service
+
+  cd $srcdir/pacman-contrib-$_pkgver
+
+  make DESTDIR="$pkgdir" install
+
+  # replace rankmirrors
+ # rm "$pkgdir/usr/bin/rankmirrors"
+ # ln -sfv "/usr/bin/pacman-mirrors" "$pkgdir/usr/bin/rankmirrors"
 }
 
-sha256sums=('dfd36086ad68564bcd977f4a1fafe51dd328acd4a95093ac4bf1249be9c41f0e'
-            '11d4d8aa2eb9f8d15f5f61835573a8140c052b8e17655f666cd81205841fd010'
+sha256sums=('9f5993fc8923530713742f15df284677f297b3eca15ed7a24758c98ac7399bd3'
+            '0fb95514bd16a316d4cce920d34edc88b0d0618c484e2d7588746869d2339795'
             '64d0200bc16e182ca45b74fb2d633c395e5ecfb8c662c557f056326fabf4836b'
+            '11d4d8aa2eb9f8d15f5f61835573a8140c052b8e17655f666cd81205841fd010'
             '0447073204ff2ee92cf9d99cd12f80735dc79abbf7d2eeec43413f91da917a72'
-            '8f3da982a29eefcf096dddd65705393981b35c847ce5f2f2bc0d9bfa78ba20b0'
-            'feb18bf548343ce6bd60b1e9252ad4b0643c21ac1a53149d93afbd6028a7a37d'
+            '233f54c2478e1e12fa2464288096ae700adc2a31a6a2f1caa69f5c3dd4a39f73'
+            'd3a77bf8ea916c24a73b2a2dc4162d2b81f993394850e0f2c331a8f8893c1a0b'
             'b6d14727ec465bb66d0a0358163b1bbfafcb4eaed55a0f57c30aabafae7eed68'
-            'ca4aa967ccfb9affab23fd61ad6d16f330b2810e5f9de93deec49ea7872369ae'
-            '0447073204ff2ee92cf9d99cd12f80735dc79abbf7d2eeec43413f91da917a72')
+            '65d8bdccdcccb64ae05160b5d1e7f3e45e1887baf89dda36c1bd44c62442f91b')
